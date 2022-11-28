@@ -6,7 +6,7 @@ import 'package:note_bloc_app/dialogs/loading_screen_controller.dart';
 class LoadingScreen {
   // singleton pattern
   LoadingScreen._sharedInstance();
-  static late final LoadingScreen _shared = LoadingScreen._sharedInstance();
+  static final LoadingScreen _shared = LoadingScreen._sharedInstance();
   factory LoadingScreen.instance() => _shared;
 
   LoadingScreenController? _controller;
@@ -28,8 +28,8 @@ class LoadingScreen {
     required BuildContext context,
     required String text,
   }) {
-    final _text = StreamController<String>();
-    _text.add(text);
+    final streamText = StreamController<String>();
+    streamText.add(text);
 
     // get the size
     final state = Overlay.of(context);
@@ -61,7 +61,7 @@ class LoadingScreen {
                     const CircularProgressIndicator(),
                     const SizedBox(height: 10),
                     StreamBuilder<String>(
-                      stream: _text.stream,
+                      stream: streamText.stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Text(
@@ -85,12 +85,12 @@ class LoadingScreen {
 
     return LoadingScreenController(
       close: () {
-        _text.close();
+        streamText.close();
         overlay.remove();
         return true;
       },
       update: (text) {
-        _text.add(text);
+        streamText.add(text);
         return true;
       },
     );

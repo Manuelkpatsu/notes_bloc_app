@@ -10,11 +10,6 @@ abstract class NotesApiProtocal {
 
 @immutable
 class NotesApi implements NotesApiProtocal {
-  // singleton pattern
-  const NotesApi._sharedInstance();
-  static const NotesApi _shared = NotesApi._sharedInstance();
-  factory NotesApi.instance() => _shared;
-
   @override
   Future<Iterable<Note>?> getNotes({required LoginHandle loginHandle}) =>
       Future.delayed(
